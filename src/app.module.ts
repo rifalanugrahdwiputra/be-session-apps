@@ -5,6 +5,9 @@ import { DosenController } from './app/controllers/dosen.controller';
 import { DosenService } from './domain/services/dosen.service';
 import { DosenRepository } from './infra/repositories/dosen.repository';
 import { DosenModule } from './infra/configs/tables/dosen.module';
+import { LogTwModule } from './infra/configs/tables/logtw.module';
+import { LogTwController } from './app/controllers/logtw.controller';
+import { LogTwService } from './domain/services/logtw.service';
 
 const ENV = process.env.NODE_ENV || 'dev';
 @Module({
@@ -13,10 +16,11 @@ const ENV = process.env.NODE_ENV || 'dev';
       isGlobal: true,
       envFilePath: '.dev.env',
     }),
-    DosenModule
+    DosenModule,
+    LogTwModule,
   ],
-  controllers: [DosenController],
-  providers: [DosenService, DosenRepository],
+  controllers: [DosenController, LogTwController],
+  providers: [DosenService, DosenRepository, LogTwService],
   exports: [DosenRepository],
 })
 export class AppModule implements NestModule {
