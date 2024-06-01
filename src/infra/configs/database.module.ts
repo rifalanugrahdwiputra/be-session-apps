@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { JobsCategoryRepository } from '../repositories/jobs_categories.repository';
 import { DatabaseShutdownProvider, databaseProviders } from './database.provider';
+import { DosenRepository } from '../repositories/dosen.repository';
 
 
 @Module({
-  providers: [...databaseProviders, JobsCategoryRepository, DatabaseShutdownProvider],
+  providers: [...databaseProviders, DosenRepository, DatabaseShutdownProvider],
   exports: [...databaseProviders],
 })
-export class DatabaseModule {}
+export class DatabaseModule { }

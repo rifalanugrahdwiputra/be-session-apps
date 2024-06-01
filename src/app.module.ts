@@ -1,10 +1,10 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CustomLoggingMiddleware } from './app/middlewares/logging/customLogging.middleware';
-import { JobCategoryModule } from './infra/configs/tables/jobCategory.module';
-import { Jobs_categoriesController } from './app/controllers/jobsCategories.controller';
-import { JobsCategoriesService } from './domain/services/jobsCategories.service';
-import { JobsCategoryRepository } from './infra/repositories/jobs_categories.repository';
+import { DosenController } from './app/controllers/dosen.controller';
+import { DosenService } from './domain/services/dosen.service';
+import { DosenRepository } from './infra/repositories/dosen.repository';
+import { DosenModule } from './infra/configs/tables/dosen.module';
 
 const ENV = process.env.NODE_ENV || 'dev';
 @Module({
@@ -13,11 +13,11 @@ const ENV = process.env.NODE_ENV || 'dev';
       isGlobal: true,
       envFilePath: '.dev.env',
     }),
-    JobCategoryModule
+    DosenModule
   ],
-  controllers: [Jobs_categoriesController],
-  providers: [JobsCategoriesService, JobsCategoryRepository],
-  exports: [JobsCategoryRepository],
+  controllers: [DosenController],
+  providers: [DosenService, DosenRepository],
+  exports: [DosenRepository],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

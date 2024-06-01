@@ -5,7 +5,7 @@ import { config as dotenvConfig } from 'dotenv';
 import { Logger, OnApplicationShutdown } from '@nestjs/common';
 
 const ENV = process.env.NODE_ENV || 'dev';
-dotenvConfig({ path: ENV === 'dev' ? 'config/.dev.env' : ENV == 'uat' ? 'config/.uat.env' : 'config/.prod.env'});
+dotenvConfig({ path: 'config/.dev.env' });
 Logger.log(`DB_HOST: ${process.env.DB_HOST}`, 'DatabaseProvider');
 const config = {
   type: 'mysql',
