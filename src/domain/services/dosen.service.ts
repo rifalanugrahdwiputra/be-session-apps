@@ -127,69 +127,88 @@ export class DosenService {
   }
 
   async all(query: DosenDTO) {
-    let includeInactive = query.include_inactive;
-    if (includeInactive != 'false' && includeInactive != 'true') {
-      throw new HttpException('Invalid value for include_inactive', 400);
+    try {
+      let includeInactive = query.include_inactive;
+      if (includeInactive != 'false' && includeInactive != 'true') {
+        throw new HttpException('Invalid value for include_inactive', 400);
+      }
+      let page = query.page;
+      let limit = query.limit;
+      let whereActive = `is_active ${includeInactive == 'true' ? 'IS NOT NULL' : '= 1'} `;
+      let sortBy = query.sortBy;
+      let orderBy = query.orderBy;
+      if (query.nama) {
+        const result = await this.dosenRepository
+          .createQueryBuilder()
+          .select()
+          .where('nama LIKE :nama', {
+            nama: `%${query.nama}%`,
+          })
+          .andWhere(whereActive)
+          .orderBy(sortBy, orderBy)
+          .skip((page - 1) * limit)
+          .take(limit)
+          .getManyAndCount();
+
+        let count = result[1];
+        let data = [];
+        result[0].map((item) => {
+          data.push({
+            ...item,
+          });
+        });
+
+        let statusCode = 200;
+        return { statusCode, data, count };
+      } else {
+        const result = await this.dosenRepository
+          .createQueryBuilder()
+          .select()
+          .where(whereActive)
+          .orderBy(sortBy, orderBy)
+          .skip((page - 1) * limit)
+          .take(limit)
+          .getManyAndCount();
+        let count = result[1];
+        let data = [];
+        result[0].map((item) => {
+          data.push({
+            ...item,
+          });
+        });
+        let statusCode = 200;
+        return { statusCode, data, count };
+      }
     }
-    let page = query.page;
-    let limit = query.limit;
-    let whereActive = `is_active ${includeInactive == 'true' ? 'IS NOT NULL' : '= 1'} `;
-    let sortBy = query.sortBy;
-    let orderBy = query.orderBy;
-    if (query.nama) {
-      const result = await this.dosenRepository
-        .createQueryBuilder()
-        .select()
-        .where('nama LIKE :nama', {
-          nama: `%${query.nama}%`,
-        })
-        .andWhere(whereActive)
-        .orderBy(sortBy, orderBy)
-        .skip((page - 1) * limit)
-        .take(limit)
-        .getManyAndCount();
-
-      let count = result[1];
-      let data = [];
-      result[0].map((item) => {
-        data.push({
-          ...item,
-        });
-      });
-
-      let statusCode = 200;
-      return { statusCode, data, count };
-    } else {
-      const result = await this.dosenRepository
-        .createQueryBuilder()
-        .select()
-        .where(whereActive)
-        .orderBy(sortBy, orderBy)
-        .skip((page - 1) * limit)
-        .take(limit)
-        .getManyAndCount();
-      let count = result[1];
-      let data = [];
-      result[0].map((item) => {
-        data.push({
-          ...item,
-        });
-      });
-      let statusCode = 200;
-      return { statusCode, data, count };
+    catch (e) {
+      console.log(e)
     }
   }
 
   async findOne(nidn: string) {
-    return this.dosenRepository
-      .findOne({ where: { nidn: nidn } })
-      .then((dosen) => {
-        if (dosen) {
-          let statusCode = 200;
-          return { statusCode, data: dosen };
-        } else {
-          throw new HttpException('Data not found', 404);
-        }
-      });
+    try {
+      return this.dosenRepository
+        .findOne({ where: { nidn: nidn } })
+        .then((dosen) => {
+          if (dosen) {
+            let statusCode = 200;
+            return { statusCode, data: dosen };
+          } else {
+            throw new HttpException('Data not found', 404);
+          }
+        });
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+  async deleteByNidn(nidn: string) {
+    const dosen = await this.dosenRepository.findOne({ where: { nidn: nidn } });
+    if (!dosen) {
+      throw new HttpException('Dosen not found', 404);
+    }
+    await this.dosenRepository.delete({ nidn: nidn });
+    return { message: 'Dosen deleted successfully' };
   }
 }

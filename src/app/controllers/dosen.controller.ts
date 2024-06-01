@@ -5,6 +5,7 @@ https://docs.nestjs.com/controllers#controllers
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpException,
@@ -107,7 +108,7 @@ export class DosenController {
   // @UseGuards(AuthGuard)
   // @ApiBearerAuth()
   @HttpCode(200)
-  @ApiQuery({ name: 'dosen', required: false })
+  @ApiQuery({ name: 'nama', required: false })
   @ApiQuery({ name: 'page', required: true, example: 1 })
   @ApiQuery({ name: 'include_inactive', required: false, example: false })
   @ApiQuery({ name: 'limit', required: true, example: 10 })
@@ -130,6 +131,19 @@ export class DosenController {
   async findOne(@Param('nidn') nidn: string) {
     try {
       return await this.dosenService.findOne(nidn);
+    } catch (error) {
+      throw new HttpException(error.message, error.status || 500);
+    }
+  }
+
+  @Delete('delete/:nidn')
+  @HttpCode(200)
+  // @UseGuards(AuthGuard)
+  // @ApiBearerAuth()
+  @UseFilters(new HttpExceptionFilter())
+  async deleteByNidn(@Param('nidn') nidn: string) {
+    try {
+      return await this.dosenService.deleteByNidn(nidn);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
