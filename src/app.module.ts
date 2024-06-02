@@ -8,6 +8,9 @@ import { DosenModule } from './infra/configs/tables/dosen.module';
 import { LogTwModule } from './infra/configs/tables/logtw.module';
 import { LogTwController } from './app/controllers/logtw.controller';
 import { LogTwService } from './domain/services/logtw.service';
+import { ProgramStudiModule } from './infra/configs/tables/program_studi.module';
+import { ProgramStudiController } from './app/controllers/program_studi.controller';
+import { ProgramStudiService } from './domain/services/program_studi.service';
 
 const ENV = process.env.NODE_ENV || 'dev';
 @Module({
@@ -18,9 +21,10 @@ const ENV = process.env.NODE_ENV || 'dev';
     }),
     DosenModule,
     LogTwModule,
+    ProgramStudiModule,
   ],
-  controllers: [DosenController, LogTwController],
-  providers: [DosenService, DosenRepository, LogTwService],
+  controllers: [DosenController, LogTwController, ProgramStudiController],
+  providers: [DosenService, DosenRepository, LogTwService, ProgramStudiService],
   exports: [DosenRepository],
 })
 export class AppModule implements NestModule {
