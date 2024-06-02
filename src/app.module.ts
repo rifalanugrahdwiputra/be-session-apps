@@ -5,6 +5,7 @@ import { DosenController } from './app/controllers/dosen.controller';
 import { DosenService } from './domain/services/dosen.service';
 import { DosenRepository } from './infra/repositories/dosen.repository';
 import { DosenModule } from './infra/configs/tables/dosen.module';
+import { MahasiswaModule } from './infra/configs/tables/mahasiswa.module';
 
 const ENV = process.env.NODE_ENV || 'dev';
 @Module({
@@ -13,7 +14,8 @@ const ENV = process.env.NODE_ENV || 'dev';
       isGlobal: true,
       envFilePath: '.dev.env',
     }),
-    DosenModule
+    DosenModule,
+    MahasiswaModule
   ],
   controllers: [DosenController],
   providers: [DosenService, DosenRepository],
