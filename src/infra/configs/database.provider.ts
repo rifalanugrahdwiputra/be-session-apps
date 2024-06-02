@@ -12,7 +12,7 @@ const config = {
   host: process.env.DB_HOST || 'localhost',
   port: parseInt(process.env.DB_PORT) || 3306,
   username: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'root',
+  password: process.env.DB_PASSWORD || '',
   database: process.env.DB_DATABASE || 'admin',
   entities: ["dist/**/*.entity.js"],
   migrations: ['dist/infra/*.js'],
