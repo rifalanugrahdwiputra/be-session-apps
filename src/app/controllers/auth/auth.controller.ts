@@ -24,4 +24,16 @@ export class AuthController {
             throw new HttpException(error.message, error.status || 500);
         }
     }
+
+    @Post('register')
+    @HttpCode(201)
+    @UseFilters(new HttpExceptionFilter())
+    @UsePipes(new ValidationPipe({ transform: true }))
+    async create(@Body() body: Login): Promise<{ message: string }> {
+        try {
+            return await this.authService.register(body);
+        } catch (error) {
+            throw new HttpException(error.message, error.status || 500);
+        }
+    }
 }
