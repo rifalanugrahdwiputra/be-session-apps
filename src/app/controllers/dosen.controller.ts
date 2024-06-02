@@ -48,8 +48,8 @@ import { CreateDosen } from 'src/infra/models/dosen.model';
 export class DosenController {
   constructor(private readonly dosenService: DosenService) { }
 
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Post('create')
   @HttpCode(201)
   @UseFilters(new HttpExceptionFilter())
@@ -64,8 +64,8 @@ export class DosenController {
 
   @Put('update/:nidn')
   @HttpCode(200)
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
   async update(@Param('nidn') nidn: string, @Body() body: CreateDosen) {
@@ -78,8 +78,8 @@ export class DosenController {
 
   @Put('activated/:nidn')
   @HttpCode(200)
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
   async active(@Param('nidn') nidn: string) {
@@ -92,8 +92,8 @@ export class DosenController {
 
   @Put('deactivated/:nidn')
   @HttpCode(200)
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
   async deactive(@Param('nidn') nidn: string) {
@@ -105,8 +105,8 @@ export class DosenController {
   }
 
   @Get('all')
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @HttpCode(200)
   @ApiQuery({ name: 'nama', required: false })
   @ApiQuery({ name: 'page', required: true, example: 1 })
@@ -124,8 +124,8 @@ export class DosenController {
   }
 
   @Get('get/:nidn')
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @HttpCode(200)
   @UseFilters(new HttpExceptionFilter())
   async findOne(@Param('nidn') nidn: string) {
@@ -138,8 +138,8 @@ export class DosenController {
 
   @Delete('delete/:nidn')
   @HttpCode(200)
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   async deleteByNidn(@Param('nidn') nidn: string) {
     try {
