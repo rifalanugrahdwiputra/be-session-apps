@@ -13,6 +13,9 @@ export class UserEntity {
     password: String;
 
     @Column()
+    foto: String;
+
+    @Column()
     is_active: Boolean;
 
 }

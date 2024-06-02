@@ -1,26 +1,26 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsNotEmpty } from "class-validator";
 
-class CreateDosen {
+class UsersModelUpdate {
     @IsNotEmpty()
     @IsString()
     @ApiProperty({
-        description: 'NIDN',
+        description: 'Username',
         type: String,
         required: true,
-        example: 'DS-001'
+        example: 'jhon'
     })
-    nidn: string;
+    username: string;
 
     @IsNotEmpty()
     @IsString()
     @ApiProperty({
-        description: 'Nama Dosen',
+        description: 'Password New',
         type: String,
         required: true,
-        example: 'Jhon Doe'
+        example: '********'
     })
-    nama: string;
+    password: string;
 
     @IsNotEmpty()
     @IsString()
@@ -33,4 +33,4 @@ class CreateDosen {
     foto: string;
 }
 
-export { CreateDosen }
+export { UsersModelUpdate }

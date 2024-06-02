@@ -20,6 +20,9 @@ import { SkripsiService } from './domain/services/skripsi.service';
 import { AuthModule } from './infra/configs/tables/auth/auth.module';
 import { AuthController } from './app/controllers/auth/auth.controller';
 import { AuthService } from './domain/services/auth.service';
+import { UsersModule } from './infra/configs/tables/users.module';
+import { UsersController } from './app/controllers/users.controller';
+import { UsersService } from './domain/services/users.service';
 
 const ENV = process.env.NODE_ENV || 'dev';
 @Module({
@@ -29,14 +32,15 @@ const ENV = process.env.NODE_ENV || 'dev';
       envFilePath: '.dev.env',
     }),
     AuthModule,
+    UsersModule,
     DosenModule,
     LogTwModule,
     ProgramStudiModule,
     MahasiswaModule,
     SkripsiModule,
   ],
-  controllers: [AuthController, DosenController, LogTwController, ProgramStudiController, MahasiswaController, SkripsiController],
-  providers: [AuthService, DosenService, DosenRepository, LogTwService, ProgramStudiService, MahasiswaService, SkripsiService],
+  controllers: [AuthController, UsersController, DosenController, LogTwController, ProgramStudiController, MahasiswaController, SkripsiController],
+  providers: [AuthService, UsersService, DosenService, DosenRepository, LogTwService, ProgramStudiService, MahasiswaService, SkripsiService],
   exports: [DosenRepository],
 })
 export class AppModule implements NestModule {
