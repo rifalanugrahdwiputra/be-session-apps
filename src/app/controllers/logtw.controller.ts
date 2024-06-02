@@ -29,6 +29,7 @@ import {
 import { LogTwService } from 'src/domain/services/logtw.service';
 import { CreateLogTw } from 'src/infra/models/logtw.model';
 import { LogTwDTO } from '../dtos/LogTw.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('logtw')
 @ApiTags('logtw')
@@ -47,8 +48,8 @@ import { LogTwDTO } from '../dtos/LogTw.dto';
 export class LogTwController {
   constructor(private readonly logTwService: LogTwService) { }
 
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Post('create')
   @HttpCode(201)
   @UseFilters(new HttpExceptionFilter())
@@ -63,8 +64,8 @@ export class LogTwController {
 
   @Put('update/:id')
   @HttpCode(200)
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
   async update(@Param('id') id: number, @Body() body: CreateLogTw) {
@@ -76,8 +77,8 @@ export class LogTwController {
   }
 
   @Get('all')
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @HttpCode(200)
   @ApiQuery({ name: 'user', required: false })
   @ApiQuery({ name: 'page', required: true, example: 1 })
@@ -95,8 +96,8 @@ export class LogTwController {
   }
 
   @Get('get/:id')
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @HttpCode(200)
   @UseFilters(new HttpExceptionFilter())
   async findOne(@Param('id') id: number) {
@@ -109,8 +110,8 @@ export class LogTwController {
 
   @Delete('delete/:id')
   @HttpCode(200)
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   async deleteByid(@Param('id') id: number) {
     try {

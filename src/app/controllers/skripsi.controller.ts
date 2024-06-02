@@ -47,8 +47,8 @@ import { CreateSkripsi } from 'src/infra/models/skripsi.model';
 export class SkripsiController {
     constructor(private readonly SkripsiService: SkripsiService) { }
 
-    // @UseGuards(AuthGuard)
-    // @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     @Post('create')
     @HttpCode(201)
     @UseFilters(new HttpExceptionFilter())
@@ -63,8 +63,8 @@ export class SkripsiController {
 
     @Put('update/:id')
     @HttpCode(200)
-    // @UseGuards(AuthGuard)
-    // @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
     async update(@Param('id') id: Number, @Body() body: CreateSkripsi) {
@@ -77,8 +77,8 @@ export class SkripsiController {
 
     @Put('activated/:id')
     @HttpCode(200)
-    // @UseGuards(AuthGuard)
-    // @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
     async active(@Param('id') id: Number) {
@@ -91,8 +91,8 @@ export class SkripsiController {
 
     @Put('deactivated/:id')
     @HttpCode(200)
-    // @UseGuards(AuthGuard)
-    // @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
     async deactive(@Param('id') id: Number) {
@@ -104,8 +104,8 @@ export class SkripsiController {
     }
 
     @Get('all')
-    // @UseGuards(AuthGuard)
-    // @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     @HttpCode(200)
     @ApiQuery({ name: 'skripsi', required: false })
     @ApiQuery({ name: 'page', required: true, example: 1 })
@@ -123,8 +123,8 @@ export class SkripsiController {
     }
 
     @Get('get/:id')
-    // @UseGuards(AuthGuard)
-    // @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     @HttpCode(200)
     @UseFilters(new HttpExceptionFilter())
     async findOne(@Param('id') id: Number) {

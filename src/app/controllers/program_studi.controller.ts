@@ -48,8 +48,8 @@ import { ProgramStudiDTO } from '../dtos/program_studi.dto';
 export class ProgramStudiController {
   constructor(private readonly programStudiService: ProgramStudiService) { }
 
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Post('create')
   @HttpCode(201)
   @UseFilters(new HttpExceptionFilter())
@@ -64,8 +64,8 @@ export class ProgramStudiController {
 
   @Put('update/:kode')
   @HttpCode(200)
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
   async update(@Param('kode') kode: string, @Body() body: CreateProgramStudi) {
@@ -78,8 +78,8 @@ export class ProgramStudiController {
 
   @Put('activated/:kode')
   @HttpCode(200)
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
   async active(@Param('kode') kode: string) {
@@ -92,8 +92,8 @@ export class ProgramStudiController {
 
   @Put('deactivated/:kode')
   @HttpCode(200)
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
   async deactive(@Param('kode') kode: string) {
@@ -105,8 +105,8 @@ export class ProgramStudiController {
   }
 
   @Get('all')
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @HttpCode(200)
   @ApiQuery({ name: 'program_studi', required: false })
   @ApiQuery({ name: 'page', required: true, example: 1 })
@@ -124,8 +124,8 @@ export class ProgramStudiController {
   }
 
   @Get('get/:kode')
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @HttpCode(200)
   @UseFilters(new HttpExceptionFilter())
   async findOne(@Param('kode') kode: string) {
@@ -138,8 +138,8 @@ export class ProgramStudiController {
 
   @Delete('delete/:kode')
   @HttpCode(200)
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   async deleteByKode(@Param('kode') kode: string) {
     try {

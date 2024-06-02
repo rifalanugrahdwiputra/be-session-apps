@@ -47,8 +47,8 @@ import { CreateMahasiswa } from 'src/infra/models/mahasiswa.model';
 export class MahasiswaController {
     constructor(private readonly MahasiswaService: MahasiswaService) { }
 
-    // @UseGuards(AuthGuard)
-    // @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     @Post('create')
     @HttpCode(201)
     @UseFilters(new HttpExceptionFilter())
@@ -63,8 +63,8 @@ export class MahasiswaController {
 
     @Put('update/:nim')
     @HttpCode(200)
-    // @UseGuards(AuthGuard)
-    // @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
     async update(@Param('nim') nim: string, @Body() body: CreateMahasiswa) {
@@ -77,8 +77,8 @@ export class MahasiswaController {
 
     @Put('activated/:nim')
     @HttpCode(200)
-    // @UseGuards(AuthGuard)
-    // @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
     async active(@Param('nim') nim: string) {
@@ -91,8 +91,8 @@ export class MahasiswaController {
 
     @Put('deactivated/:nim')
     @HttpCode(200)
-    // @UseGuards(AuthGuard)
-    // @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
     async deactive(@Param('nim') nim: string) {
@@ -104,8 +104,8 @@ export class MahasiswaController {
     }
 
     @Get('all')
-    // @UseGuards(AuthGuard)
-    // @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     @HttpCode(200)
     @ApiQuery({ name: 'mahasiswa', required: false })
     @ApiQuery({ name: 'page', required: true, example: 1 })
@@ -123,8 +123,8 @@ export class MahasiswaController {
     }
 
     @Get('get/:nim')
-    // @UseGuards(AuthGuard)
-    // @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
     @HttpCode(200)
     @UseFilters(new HttpExceptionFilter())
     async findOne(@Param('nim') nim: string) {
