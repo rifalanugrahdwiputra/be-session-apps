@@ -4,7 +4,7 @@ import { DatabaseModule } from '../../database.module';
 import { AuthService } from 'src/domain/services/auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { LocalStrategy } from 'src/app/middlewares/guard/local-strategi';
+import { LocalStrategy } from 'src/app/middlewares/guard/local-strategy';
 @Module({
   imports: [
     DatabaseModule,
