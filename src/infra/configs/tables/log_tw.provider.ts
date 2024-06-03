@@ -1,4 +1,5 @@
-import { LogTwEntity } from 'src/domain/entities/logtw.entity';
+
+import { LogTwEntity } from 'src/domain/entities/log_tw.entity';
 import { DataSource } from 'typeorm';
 
 
