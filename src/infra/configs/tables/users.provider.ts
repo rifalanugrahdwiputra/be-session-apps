@@ -1,4 +1,3 @@
-import { DosenEntity } from 'src/domain/entities/dosen.entity';
 import { UserEntity } from 'src/domain/entities/user.entity';
 import { DataSource } from 'typeorm';
 

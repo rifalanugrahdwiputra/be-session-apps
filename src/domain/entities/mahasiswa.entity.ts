@@ -14,6 +14,6 @@ export class MahasiswaEntity {
     @Column()
     foto: string;
 
-    @Column()
+    @Column({ default: true })
     is_active: boolean;
 } 

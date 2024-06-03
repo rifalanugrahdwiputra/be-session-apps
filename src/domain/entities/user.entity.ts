@@ -10,12 +10,12 @@ export class UserEntity {
     username: string;
 
     @Column()
-    password: String;
+    password: string;
 
     @Column()
-    foto: String;
+    foto: string;
 
-    @Column()
-    is_active: Boolean;
+    @Column({ default: true })
+    is_active: boolean;
 
 }

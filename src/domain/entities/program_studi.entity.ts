@@ -10,12 +10,12 @@ export class ProgramStudiEntity {
     program_studi: string;
 
     @Column()
-    kaprodi: String;
+    kaprodi: string;
 
     @Column()
-    nidn_kaprodi: String;
+    nidn_kaprodi: string;
 
-    @Column()
-    is_active: Boolean;
+    @Column({ default: true })
+    is_active: boolean;
 
 }

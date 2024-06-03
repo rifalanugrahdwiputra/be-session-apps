@@ -26,10 +26,7 @@ import {
   error_403,
   error_500,
 } from '../statics/filters/exceptions.filter';
-import { DosenDTO } from '../dtos/dosen.dto';
 import { AuthGuard } from '../middlewares/guard/auth.guard';
-import { DosenService } from 'src/domain/services/dosen.service';
-import { CreateDosen } from 'src/infra/models/dosen.model';
 import { UsersService } from 'src/domain/services/users.service';
 import { UsersModelUpdate } from 'src/infra/models/users.model';
 

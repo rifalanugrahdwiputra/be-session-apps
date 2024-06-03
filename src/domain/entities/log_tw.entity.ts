@@ -6,15 +6,15 @@ export class LogTwEntity {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
-    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    @CreateDateColumn({ type: 'timestamp' })
     time: Date;
 
     @Column()
-    user: String;
+    user: string;
 
     @Column()
-    ipaddress: String;
+    ipaddress: string;
 
-    @Column()
-    information: String;
+    @Column({ type: 'text' })
+    information: string;
 }

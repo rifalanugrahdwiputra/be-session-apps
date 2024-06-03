@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm'
 
 @Entity('skripsi')
 export class SkripsiEntity {
@@ -17,10 +17,10 @@ export class SkripsiEntity {
     @Column()
     penguji2: string
 
-    @Column()
+    @CreateDateColumn()
     tanggal_daftar: Date
 
-    @Column()
+    @CreateDateColumn()
     tanggal_sidang: Date
 
     @Column()
@@ -41,6 +41,6 @@ export class SkripsiEntity {
     @Column({ type: 'text' })
     keterangan: string
 
-    @Column()
-    is_active: Boolean;
+    @Column({ default: true })
+    is_active: boolean;
 }

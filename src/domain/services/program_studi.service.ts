@@ -4,9 +4,6 @@ https://docs.nestjs.com/providers#services
 
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { DosenEntity } from '../entities/dosen.entity';
-import { CreateDosen } from 'src/infra/models/dosen.model';
-import { DosenDTO } from 'src/app/dtos/dosen.dto';
 import { CreateProgramStudi } from 'src/infra/models/program_studi.model';
 import { ProgramStudiDTO } from 'src/app/dtos/program_studi.dto';
 import { ProgramStudiEntity } from '../entities/program_studi.entity';
