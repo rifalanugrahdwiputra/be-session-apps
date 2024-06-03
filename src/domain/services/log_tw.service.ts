@@ -4,9 +4,9 @@ https://docs.nestjs.com/providers#services
 
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { LogTwEntity } from '../entities/LogTw.entity';
-import { LogTwDTO } from 'src/app/dtos/LogTw.dto';
-import { CreateLogTw } from 'src/infra/models/logtw.model';
+import { LogTwEntity } from '../entities/log_tw.entity';
+import { CreateLogTw } from 'src/infra/models/log_tw.model';
+import { LogTwDTO } from 'src/app/dtos/log_tw.dto';
 
 @Injectable()
 export class LogTwService {

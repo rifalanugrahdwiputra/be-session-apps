@@ -26,10 +26,10 @@ import {
   error_403,
   error_500,
 } from '../statics/filters/exceptions.filter';
-import { LogTwService } from 'src/domain/services/logtw.service';
-import { CreateLogTw } from 'src/infra/models/logtw.model';
-import { LogTwDTO } from '../dtos/LogTw.dto';
+import { LogTwDTO } from '../dtos/log_tw.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { LogTwService } from 'src/domain/services/log_tw.service';
+import { CreateLogTw } from 'src/infra/models/log_tw.model';
 
 @Controller('logtw')
 @ApiTags('logtw')
