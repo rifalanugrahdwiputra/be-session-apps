@@ -194,4 +194,13 @@ export class MahasiswaService {
                 }
             });
     }
+
+    async deleteByNim(nim: string) {
+        const mahasiswa = await this.mahasiswaRepository.findOne({ where: { nim: nim } });
+        if (!mahasiswa) {
+            throw new HttpException('Mahasiswa not found', 404);
+        }
+        await this.mahasiswaRepository.delete({ nim: nim });
+        return { message: 'Mahasiswa deleted successfully' };
+    }
 }

@@ -218,7 +218,7 @@ export class SkripsiService {
         }
     }
 
-    async deleteByid(id: Number) {
+    async deleteById(id: Number) {
         const skripsi = await this.skripsiRepository.findOne({ where: { id: id } });
         if (!skripsi) {
             throw new HttpException('Skripsi not found', 404);

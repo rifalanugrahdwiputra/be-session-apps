@@ -6,6 +6,7 @@ import {
     Body,
     Controller,
     Get,
+    Delete,
     HttpCode,
     HttpException,
     Param,
@@ -130,6 +131,19 @@ export class MahasiswaController {
     async findOne(@Param('nim') nim: string) {
         try {
             return await this.MahasiswaService.findOne(nim);
+        } catch (error) {
+            throw new HttpException(error.message, error.status || 500);
+        }
+    }
+
+    @Delete('delete/:nim')
+    @HttpCode(200)
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
+    @UseFilters(new HttpExceptionFilter())
+    async deleteByNim(@Param('nim') nim: string) {
+        try {
+            return await this.MahasiswaService.deleteByNim(nim);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }

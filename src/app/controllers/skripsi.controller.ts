@@ -5,6 +5,7 @@ https://docs.nestjs.com/controllers#controllers
 import {
     Body,
     Controller,
+    Delete,
     Get,
     HttpCode,
     HttpException,
@@ -111,7 +112,7 @@ export class SkripsiController {
     @ApiQuery({ name: 'page', required: true, example: 1 })
     @ApiQuery({ name: 'include_inactive', required: false, example: false })
     @ApiQuery({ name: 'limit', required: true, example: 10 })
-    @ApiQuery({ name: 'sortBy', required: false, example: 'nama' })
+    @ApiQuery({ name: 'sortBy', required: false, example: 'id' })
     @ApiQuery({ name: 'orderBy', required: false, example: 'DESC' })
     @UseFilters(new HttpExceptionFilter())
     async findAll(@Query() query: SkripsiDTO) {
@@ -130,6 +131,19 @@ export class SkripsiController {
     async findOne(@Param('id') id: Number) {
         try {
             return await this.SkripsiService.findOne(id);
+        } catch (error) {
+            throw new HttpException(error.message, error.status || 500);
+        }
+    }
+
+    @Delete('delete/:id')
+    @HttpCode(200)
+    @UseGuards(AuthGuard)
+    @ApiBearerAuth()
+    @UseFilters(new HttpExceptionFilter())
+    async deleteById(@Param('id') id: Number) {
+        try {
+            return await this.SkripsiService.deleteById(id);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }
