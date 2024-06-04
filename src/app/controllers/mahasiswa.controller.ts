@@ -13,6 +13,7 @@ import {
     Post,
     Put,
     Query,
+    Req,
     UseFilters,
     UseGuards,
     UsePipes,
@@ -30,6 +31,7 @@ import { MahasiswaDTO } from '../dtos/mahasiswa.dto';
 import { AuthGuard } from 'src/app/middlewares/guard/auth.guard';
 import { MahasiswaService } from 'src/domain/services/mahasiswa.service';
 import { CreateMahasiswa } from 'src/infra/models/mahasiswa.model';
+import { Request } from 'express';
 
 @Controller('mahasiswa')
 @ApiTags('mahasiswa')
@@ -54,9 +56,9 @@ export class MahasiswaController {
     @HttpCode(201)
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
-    async create(@Body() body: CreateMahasiswa): Promise<{ message: string }> {
+    async create(@Body() body: CreateMahasiswa, @Req() request: Request): Promise<{ message: string }> {
         try {
-            return await this.MahasiswaService.create(body);
+            return await this.MahasiswaService.create(body, request);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }
@@ -68,9 +70,9 @@ export class MahasiswaController {
     @ApiBearerAuth()
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
-    async update(@Param('nim') nim: string, @Body() body: CreateMahasiswa) {
+    async update(@Param('nim') nim: string, @Body() body: CreateMahasiswa, @Req() request: Request) {
         try {
-            return await this.MahasiswaService.update(body, nim);
+            return await this.MahasiswaService.update(body, nim, request);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }
@@ -82,9 +84,9 @@ export class MahasiswaController {
     @ApiBearerAuth()
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
-    async active(@Param('nim') nim: string) {
+    async active(@Param('nim') nim: string, @Req() request: Request) {
         try {
-            return await this.MahasiswaService.active(nim);
+            return await this.MahasiswaService.active(nim, request);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }
@@ -96,9 +98,9 @@ export class MahasiswaController {
     @ApiBearerAuth()
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
-    async deactive(@Param('nim') nim: string) {
+    async deactive(@Param('nim') nim: string, @Req() request: Request) {
         try {
-            return await this.MahasiswaService.deactive(nim);
+            return await this.MahasiswaService.deactive(nim, request);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }
@@ -115,9 +117,9 @@ export class MahasiswaController {
     @ApiQuery({ name: 'sortBy', required: false, example: 'nama' })
     @ApiQuery({ name: 'orderBy', required: false, example: 'DESC' })
     @UseFilters(new HttpExceptionFilter())
-    async findAll(@Query() query: MahasiswaDTO) {
+    async findAll(@Query() query: MahasiswaDTO, @Req() request: Request) {
         try {
-            return await this.MahasiswaService.all(query);
+            return await this.MahasiswaService.all(query, request);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }
@@ -128,9 +130,9 @@ export class MahasiswaController {
     @ApiBearerAuth()
     @HttpCode(200)
     @UseFilters(new HttpExceptionFilter())
-    async findOne(@Param('nim') nim: string) {
+    async findOne(@Param('nim') nim: string, @Req() request: Request) {
         try {
-            return await this.MahasiswaService.findOne(nim);
+            return await this.MahasiswaService.findOne(nim, request);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }

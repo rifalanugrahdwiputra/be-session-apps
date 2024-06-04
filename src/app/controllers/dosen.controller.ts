@@ -13,6 +13,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
   UseFilters,
   UseGuards,
   UsePipes,
@@ -30,6 +31,7 @@ import { DosenDTO } from '../dtos/dosen.dto';
 import { AuthGuard } from '../middlewares/guard/auth.guard';
 import { DosenService } from 'src/domain/services/dosen.service';
 import { CreateDosen } from 'src/infra/models/dosen.model';
+import { Request } from 'express';
 
 @Controller('dosen')
 @ApiTags('dosen')
@@ -54,9 +56,9 @@ export class DosenController {
   @HttpCode(201)
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
-  async create(@Body() body: CreateDosen): Promise<{ message: string }> {
+  async create(@Body() body: CreateDosen, @Req() request: Request): Promise<{ message: string }> {
     try {
-      return await this.dosenService.create(body);
+      return await this.dosenService.create(body, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
@@ -68,9 +70,9 @@ export class DosenController {
   @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
-  async update(@Param('nidn') nidn: string, @Body() body: CreateDosen) {
+  async update(@Param('nidn') nidn: string, @Body() body: CreateDosen, @Req() request: Request) {
     try {
-      return await this.dosenService.update(body, nidn);
+      return await this.dosenService.update(body, nidn, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
@@ -82,9 +84,9 @@ export class DosenController {
   @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
-  async active(@Param('nidn') nidn: string) {
+  async active(@Param('nidn') nidn: string, @Req() request: Request) {
     try {
-      return await this.dosenService.active(nidn);
+      return await this.dosenService.active(nidn, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
@@ -96,9 +98,9 @@ export class DosenController {
   @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
-  async deactive(@Param('nidn') nidn: string) {
+  async deactive(@Param('nidn') nidn: string, @Req() request: Request) {
     try {
-      return await this.dosenService.deactive(nidn);
+      return await this.dosenService.deactive(nidn, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
@@ -115,9 +117,9 @@ export class DosenController {
   @ApiQuery({ name: 'sortBy', required: false, example: 'nama' })
   @ApiQuery({ name: 'orderBy', required: false, example: 'DESC' })
   @UseFilters(new HttpExceptionFilter())
-  async findAll(@Query() query: DosenDTO) {
+  async findAll(@Query() query: DosenDTO, @Req() request: Request) {
     try {
-      return await this.dosenService.all(query);
+      return await this.dosenService.all(query, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
@@ -128,9 +130,9 @@ export class DosenController {
   @ApiBearerAuth()
   @HttpCode(200)
   @UseFilters(new HttpExceptionFilter())
-  async findOne(@Param('nidn') nidn: string) {
+  async findOne(@Param('nidn') nidn: string, @Req() request: Request) {
     try {
-      return await this.dosenService.findOne(nidn);
+      return await this.dosenService.findOne(nidn, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
@@ -141,9 +143,9 @@ export class DosenController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
-  async deleteByNidn(@Param('nidn') nidn: string) {
+  async deleteByNidn(@Param('nidn') nidn: string, @Req() request: Request) {
     try {
-      return await this.dosenService.deleteByNidn(nidn);
+      return await this.dosenService.deleteByNidn(nidn, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }

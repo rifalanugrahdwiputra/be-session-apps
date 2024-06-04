@@ -13,6 +13,7 @@ import {
     Post,
     Put,
     Query,
+    Req,
     UseFilters,
     UseGuards,
     UsePipes,
@@ -30,6 +31,7 @@ import { SkripsiDTO } from '../dtos/skripsi.dto';
 import { AuthGuard } from 'src/app/middlewares/guard/auth.guard';
 import { SkripsiService } from 'src/domain/services/skripsi.service';
 import { CreateSkripsi } from 'src/infra/models/skripsi.model';
+import { Request } from 'express';
 
 @Controller('skripsi')
 @ApiTags('skripsi')
@@ -54,9 +56,9 @@ export class SkripsiController {
     @HttpCode(201)
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
-    async create(@Body() body: CreateSkripsi): Promise<{ message: String }> {
+    async create(@Body() body: CreateSkripsi, @Req() request: Request): Promise<{ message: String }> {
         try {
-            return await this.SkripsiService.create(body);
+            return await this.SkripsiService.create(body, request);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }
@@ -68,9 +70,9 @@ export class SkripsiController {
     @ApiBearerAuth()
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
-    async update(@Param('id') id: Number, @Body() body: CreateSkripsi) {
+    async update(@Param('id') id: Number, @Body() body: CreateSkripsi, @Req() request: Request) {
         try {
-            return await this.SkripsiService.update(body, id);
+            return await this.SkripsiService.update(body, id, request);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }
@@ -82,9 +84,9 @@ export class SkripsiController {
     @ApiBearerAuth()
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
-    async active(@Param('id') id: Number) {
+    async active(@Param('id') id: Number, @Req() request: Request) {
         try {
-            return await this.SkripsiService.active(id);
+            return await this.SkripsiService.active(id, request);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }
@@ -96,9 +98,9 @@ export class SkripsiController {
     @ApiBearerAuth()
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
-    async deactive(@Param('id') id: Number) {
+    async deactive(@Param('id') id: Number, @Req() request: Request) {
         try {
-            return await this.SkripsiService.deactive(id);
+            return await this.SkripsiService.deactive(id, request);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }
@@ -115,9 +117,9 @@ export class SkripsiController {
     @ApiQuery({ name: 'sortBy', required: false, example: 'id' })
     @ApiQuery({ name: 'orderBy', required: false, example: 'DESC' })
     @UseFilters(new HttpExceptionFilter())
-    async findAll(@Query() query: SkripsiDTO) {
+    async findAll(@Query() query: SkripsiDTO, @Req() request: Request) {
         try {
-            return await this.SkripsiService.all(query);
+            return await this.SkripsiService.all(query, request);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }
@@ -128,9 +130,9 @@ export class SkripsiController {
     @ApiBearerAuth()
     @HttpCode(200)
     @UseFilters(new HttpExceptionFilter())
-    async findOne(@Param('id') id: Number) {
+    async findOne(@Param('id') id: Number, @Req() request: Request) {
         try {
-            return await this.SkripsiService.findOne(id);
+            return await this.SkripsiService.findOne(id, request);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }

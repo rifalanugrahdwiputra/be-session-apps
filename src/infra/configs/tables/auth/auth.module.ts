@@ -5,6 +5,8 @@ import { AuthService } from 'src/domain/services/auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { LocalStrategy } from 'src/app/middlewares/guard/local-strategy';
+import { logTwProvider } from '../log_tw.provider';
+import { LogTwService } from 'src/domain/services/log_tw.service';
 @Module({
   imports: [
     DatabaseModule,
@@ -18,11 +20,14 @@ import { LocalStrategy } from 'src/app/middlewares/guard/local-strategy';
     ...authProvider,
     AuthService,
     LocalStrategy,
+    ...logTwProvider,
+    LogTwService,
   ],
   exports: [
     ...authProvider,
     PassportModule,
     JwtModule,
+    ...logTwProvider
   ],
 })
 export class AuthModule { }

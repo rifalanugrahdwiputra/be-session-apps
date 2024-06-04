@@ -30,6 +30,7 @@ import { LogTwDTO } from '../dtos/log_tw.dto';
 import { AuthGuard } from 'src/app/middlewares/guard/auth.guard';
 import { LogTwService } from 'src/domain/services/log_tw.service';
 import { CreateLogTw } from 'src/infra/models/log_tw.model';
+import { Request } from 'express';
 
 @Controller('logtw')
 @ApiTags('logtw')

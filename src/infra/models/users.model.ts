@@ -1,7 +1,17 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsNotEmpty } from "class-validator";
+import { IsString, IsNotEmpty, IsEmail } from "class-validator";
 
 class UsersModelUpdate {
+    @IsNotEmpty()
+    @IsEmail()
+    @ApiProperty({
+        description: 'Email',
+        type: String,
+        required: true,
+        example: 'jhon@gmail.com'
+    })
+    email: string;
+
     @IsNotEmpty()
     @IsString()
     @ApiProperty({
@@ -15,22 +25,64 @@ class UsersModelUpdate {
     @IsNotEmpty()
     @IsString()
     @ApiProperty({
-        description: 'Password New',
+        description: 'Alamat',
         type: String,
         required: true,
-        example: '********'
+        example: 'Jl.Paledang'
     })
-    password: string;
+    alamat: string;
 
     @IsNotEmpty()
     @IsString()
     @ApiProperty({
-        description: 'Foto Dosen',
+        description: 'Telp',
         type: String,
         required: true,
-        example: 'https://'
+        example: '0893884732938'
     })
-    foto: string;
+    telp: string;
 }
 
-export { UsersModelUpdate }
+class UsersModelCreate {
+    @IsNotEmpty()
+    @IsEmail()
+    @ApiProperty({
+        description: 'Email',
+        type: String,
+        required: true,
+        example: 'jhon@gmail.com'
+    })
+    email: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty({
+        description: 'Username',
+        type: String,
+        required: true,
+        example: 'jhon'
+    })
+    username: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty({
+        description: 'Alamat',
+        type: String,
+        required: true,
+        example: 'Jl.Paledang'
+    })
+    alamat: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty({
+        description: 'Telp',
+        type: String,
+        required: true,
+        example: '0893884732938'
+    })
+    telp: string;
+}
+
+export { UsersModelUpdate, UsersModelCreate }

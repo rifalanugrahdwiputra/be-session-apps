@@ -13,6 +13,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
   UseFilters,
   UseGuards,
   UsePipes,
@@ -30,6 +31,7 @@ import { AuthGuard } from 'src/app/middlewares/guard/auth.guard';
 import { ProgramStudiService } from 'src/domain/services/program_studi.service';
 import { CreateProgramStudi } from 'src/infra/models/program_studi.model';
 import { ProgramStudiDTO } from '../dtos/program_studi.dto';
+import { Request } from 'express';
 
 @Controller('program_studi')
 @ApiTags('program_studi')
@@ -54,9 +56,9 @@ export class ProgramStudiController {
   @HttpCode(201)
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
-  async create(@Body() body: CreateProgramStudi): Promise<{ message: string }> {
+  async create(@Body() body: CreateProgramStudi, @Req() request: Request): Promise<{ message: string }> {
     try {
-      return await this.programStudiService.create(body);
+      return await this.programStudiService.create(body, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
@@ -68,9 +70,9 @@ export class ProgramStudiController {
   @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
-  async update(@Param('kode') kode: string, @Body() body: CreateProgramStudi) {
+  async update(@Param('kode') kode: string, @Body() body: CreateProgramStudi, @Req() request: Request) {
     try {
-      return await this.programStudiService.update(body, kode);
+      return await this.programStudiService.update(body, kode, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
@@ -82,9 +84,9 @@ export class ProgramStudiController {
   @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
-  async active(@Param('kode') kode: string) {
+  async active(@Param('kode') kode: string, @Req() request: Request) {
     try {
-      return await this.programStudiService.active(kode);
+      return await this.programStudiService.active(kode, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
@@ -96,9 +98,9 @@ export class ProgramStudiController {
   @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
-  async deactive(@Param('kode') kode: string) {
+  async deactive(@Param('kode') kode: string, @Req() request: Request) {
     try {
-      return await this.programStudiService.deactive(kode);
+      return await this.programStudiService.deactive(kode, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
@@ -115,9 +117,9 @@ export class ProgramStudiController {
   @ApiQuery({ name: 'sortBy', required: false, example: 'program_studi' })
   @ApiQuery({ name: 'orderBy', required: false, example: 'DESC' })
   @UseFilters(new HttpExceptionFilter())
-  async findAll(@Query() query: ProgramStudiDTO) {
+  async findAll(@Query() query: ProgramStudiDTO, @Req() request: Request) {
     try {
-      return await this.programStudiService.all(query);
+      return await this.programStudiService.all(query, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
@@ -128,9 +130,9 @@ export class ProgramStudiController {
   @ApiBearerAuth()
   @HttpCode(200)
   @UseFilters(new HttpExceptionFilter())
-  async findOne(@Param('kode') kode: string) {
+  async findOne(@Param('kode') kode: string, @Req() request: Request) {
     try {
-      return await this.programStudiService.findOne(kode);
+      return await this.programStudiService.findOne(kode, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
@@ -141,9 +143,9 @@ export class ProgramStudiController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
-  async deleteByKode(@Param('kode') kode: string) {
+  async deleteByKode(@Param('kode') kode: string, @Req() request: Request) {
     try {
-      return await this.programStudiService.deleteByKode(kode);
+      return await this.programStudiService.deleteByKode(kode, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }

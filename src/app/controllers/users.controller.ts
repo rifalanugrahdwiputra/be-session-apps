@@ -13,6 +13,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
   UseFilters,
   UseGuards,
   UsePipes,
@@ -29,6 +30,7 @@ import {
 import { AuthGuard } from 'src/app/middlewares/guard/auth.guard';
 import { UsersService } from 'src/domain/services/users.service';
 import { UsersModelUpdate } from 'src/infra/models/users.model';
+import { Request } from 'express';
 
 @Controller('users')
 @ApiTags('Users')
@@ -47,28 +49,28 @@ import { UsersModelUpdate } from 'src/infra/models/users.model';
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
-  @Put('update/:username')
+  @Put('profile/update')
   @HttpCode(200)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @UseFilters(new HttpExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
-  async update(@Param('username') username: string, @Body() body: UsersModelUpdate) {
+  async update(@Body() body: UsersModelUpdate, @Req() request: Request) {
     try {
-      return await this.usersService.update(body, username);
+      return await this.usersService.update(body, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
   }
 
-  @Get('me/:username')
+  @Get('me')
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @HttpCode(200)
   @UseFilters(new HttpExceptionFilter())
-  async findOne(@Param('username') username: string) {
+  async getUsers(@Req() request: Request) {
     try {
-      return await this.usersService.findOne(username);
+      return await this.usersService.findOne(request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
