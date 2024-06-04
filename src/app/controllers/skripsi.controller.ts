@@ -26,7 +26,7 @@ import {
     error_500,
 } from '../statics/filters/exceptions.filter';
 import { SkripsiDTO } from '../dtos/skripsi.dto';
-import { AuthGuard } from '../middlewares/guard/auth.guard';
+import { AuthGuard } from 'src/app/middlewares/guard/auth.guard';
 import { SkripsiService } from 'src/domain/services/skripsi.service';
 import { CreateSkripsi } from 'src/infra/models/skripsi.model';
 

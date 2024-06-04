@@ -26,7 +26,7 @@ import {
   error_403,
   error_500,
 } from '../statics/filters/exceptions.filter';
-import { AuthGuard } from '../middlewares/guard/auth.guard';
+import { AuthGuard } from 'src/app/middlewares/guard/auth.guard';
 import { ProgramStudiService } from 'src/domain/services/program_studi.service';
 import { CreateProgramStudi } from 'src/infra/models/program_studi.model';
 import { ProgramStudiDTO } from '../dtos/program_studi.dto';

@@ -26,12 +26,12 @@ import {
   error_403,
   error_500,
 } from '../statics/filters/exceptions.filter';
-import { AuthGuard } from '../middlewares/guard/auth.guard';
+import { AuthGuard } from 'src/app/middlewares/guard/auth.guard';
 import { UsersService } from 'src/domain/services/users.service';
 import { UsersModelUpdate } from 'src/infra/models/users.model';
 
-@ApiTags('Users')
 @Controller('users')
+@ApiTags('Users')
 @ApiResponse({
   status: 500,
   schema: { type: 'object', properties: error_500 },

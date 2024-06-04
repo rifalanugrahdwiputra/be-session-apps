@@ -26,7 +26,7 @@ import {
     error_500,
 } from '../statics/filters/exceptions.filter';
 import { MahasiswaDTO } from '../dtos/mahasiswa.dto';
-import { AuthGuard } from '../middlewares/guard/auth.guard';
+import { AuthGuard } from 'src/app/middlewares/guard/auth.guard';
 import { MahasiswaService } from 'src/domain/services/mahasiswa.service';
 import { CreateMahasiswa } from 'src/infra/models/mahasiswa.model';
 

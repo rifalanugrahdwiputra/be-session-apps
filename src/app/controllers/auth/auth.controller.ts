@@ -1,14 +1,27 @@
 import { Body, Controller, HttpCode, HttpException, Post, UseFilters, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from 'src/app/middlewares/guard/local-auth.guard';
 import { AuthService } from 'src/domain/services/auth.service';
-import { HttpExceptionFilter } from 'src/app/statics/filters/exceptions.filter';
+import { HttpExceptionFilter, error_401, error_403, error_500 } from 'src/app/statics/filters/exceptions.filter';
 import { Login } from 'src/infra/models/auth.model';
+import { AuthGuard } from 'src/app/middlewares/guard/auth.guard';
 
-@ApiTags('Auth')
 @Controller('auth')
+@ApiTags('Auth')
+@ApiResponse({
+    status: 500,
+    schema: { type: 'object', properties: error_500 },
+})
+@ApiResponse({
+    status: 401,
+    schema: { type: 'object', properties: error_401 },
+})
+@ApiResponse({
+    status: 403,
+    schema: { type: 'object', properties: error_403 },
+})
 export class AuthController {
-    constructor(private authService: AuthService) { }
+    constructor(private readonly authService: AuthService) { }
 
     @Post('login')
     @UseGuards(LocalAuthGuard)
@@ -27,6 +40,7 @@ export class AuthController {
 
     @Post('register')
     @HttpCode(201)
+    @UseGuards(AuthGuard)
     @UseFilters(new HttpExceptionFilter())
     @UsePipes(new ValidationPipe({ transform: true }))
     async create(@Body() body: Login): Promise<{ message: string }> {
