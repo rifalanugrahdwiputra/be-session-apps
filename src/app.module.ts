@@ -26,6 +26,8 @@ import { UsersService } from './domain/services/users.service';
 import { DashboardModule } from './infra/configs/tables/dashboard.module';
 import { DashboardController } from './app/controllers/dashboard.controller';
 import { DashboardService } from './domain/services/dashboard.service';
+import { UtilController } from './app/controllers/util.controller';
+import { UtilsService } from './domain/services/util.service';
 
 const ENV = process.env.NODE_ENV || 'dev';
 @Module({
@@ -43,8 +45,8 @@ const ENV = process.env.NODE_ENV || 'dev';
     MahasiswaModule,
     SkripsiModule,
   ],
-  controllers: [AuthController, UsersController, DashboardController, DosenController, LogTwController, ProgramStudiController, MahasiswaController, SkripsiController],
-  providers: [AuthService, UsersService, DashboardService, DosenService, DosenRepository, LogTwService, ProgramStudiService, MahasiswaService, SkripsiService],
+  controllers: [AuthController, UsersController, DashboardController, UtilController, DosenController, LogTwController, ProgramStudiController, MahasiswaController, SkripsiController],
+  providers: [AuthService, UsersService, DashboardService, UtilsService, DosenService, DosenRepository, LogTwService, ProgramStudiService, MahasiswaService, SkripsiService],
   exports: [DosenRepository],
 })
 export class AppModule implements NestModule {
