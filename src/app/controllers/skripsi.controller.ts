@@ -143,9 +143,9 @@ export class SkripsiController {
     @UseGuards(AuthGuard)
     @ApiBearerAuth()
     @UseFilters(new HttpExceptionFilter())
-    async deleteById(@Param('id') id: Number) {
+    async deleteById(@Param('id') id: Number, @Req() request: Request) {
         try {
-            return await this.SkripsiService.deleteById(id);
+            return await this.SkripsiService.deleteByid(id, request);
         } catch (error) {
             throw new HttpException(error.message, error.status || 500);
         }

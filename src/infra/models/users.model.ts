@@ -85,4 +85,26 @@ class UsersModelCreate {
     telp: string;
 }
 
-export { UsersModelUpdate, UsersModelCreate }
+class ChangePassword {
+    @IsNotEmpty()
+    @IsEmail()
+    @ApiProperty({
+        description: 'Password New',
+        type: String,
+        required: true,
+        example: 'admin123'
+    })
+    password: string;
+
+    @IsNotEmpty()
+    @IsEmail()
+    @ApiProperty({
+        description: 'Verify Password',
+        type: String,
+        required: true,
+        example: 'admin123'
+    })
+    passwordVerify: string;
+}
+
+export { UsersModelUpdate, UsersModelCreate, ChangePassword }

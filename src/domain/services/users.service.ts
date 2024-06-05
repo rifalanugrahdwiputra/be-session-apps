@@ -1,10 +1,11 @@
 import { HttpException, Inject, Injectable, UnauthorizedException, ForbiddenException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../entities/user.entity';
-import { UsersModelUpdate } from 'src/infra/models/users.model';
+import { ChangePassword, UsersModelUpdate } from 'src/infra/models/users.model';
 import { LogTwEntity } from '../entities/log_tw.entity';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class UsersService {
@@ -15,6 +16,69 @@ export class UsersService {
     private logTwRepository: Repository<LogTwEntity>,
     private jwtService: JwtService,
   ) { }
+
+  async changePassword(body: ChangePassword, request: Request) {
+    const token = this.extractTokenFromHeader(request.headers.authorization);
+    if (!token) {
+      throw new UnauthorizedException('Token not provided');
+    }
+
+    try {
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: process.env.JWT_SECRET,
+      });
+      return this.usersRepository
+        .findOne({ where: { username: payload.username } })
+        .then(async (users) => {
+          if (users) {
+            if (body.password === body.passwordVerify) {
+              const hashedPassword = crypto.createHash('md5').update(body.password).digest('hex');
+              await this.usersRepository
+                .createQueryBuilder()
+                .update(UserEntity)
+                .set({
+                  password: hashedPassword,
+                })
+                .where('username = :username', { username: payload.username })
+                .execute();
+              await this.logTwRepository
+                .createQueryBuilder()
+                .insert()
+                .into(LogTwEntity)
+                .values({
+                  user: payload.username,
+                  ipaddress: payload.ip,
+                  information: `${payload.username} berhasil merubah password`,
+                })
+                .execute();
+              return { message: 'Users change password successfully' };
+            }
+            else {
+              return {
+                message: "Password tidak match"
+              }
+            }
+
+          } else {
+            await this.logTwRepository
+              .createQueryBuilder()
+              .insert()
+              .into(LogTwEntity)
+              .values({
+                user: payload.username,
+                ipaddress: payload.ip,
+                information: `${payload.username} gagal menemukan users`,
+              })
+              .execute();
+            throw new HttpException('Users not found', 404);
+          }
+        },
+        );
+    }
+    catch (e) {
+      throw new ForbiddenException('Invalid token');
+    }
+  }
 
   async update(body: UsersModelUpdate, request: Request) {
     const token = this.extractTokenFromHeader(request.headers.authorization);

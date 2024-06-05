@@ -29,7 +29,7 @@ import {
 } from '../statics/filters/exceptions.filter';
 import { AuthGuard } from 'src/app/middlewares/guard/auth.guard';
 import { UsersService } from 'src/domain/services/users.service';
-import { UsersModelUpdate } from 'src/infra/models/users.model';
+import { ChangePassword, UsersModelUpdate } from 'src/infra/models/users.model';
 import { Request } from 'express';
 
 @Controller('users')
@@ -58,6 +58,20 @@ export class UsersController {
   async update(@Body() body: UsersModelUpdate, @Req() request: Request) {
     try {
       return await this.usersService.update(body, request);
+    } catch (error) {
+      throw new HttpException(error.message, error.status || 500);
+    }
+  }
+
+  @Put('profile/change-password')
+  @HttpCode(200)
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @UseFilters(new HttpExceptionFilter())
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async changePassword(@Body() body: ChangePassword, @Req() request: Request) {
+    try {
+      return await this.usersService.changePassword(body, request);
     } catch (error) {
       throw new HttpException(error.message, error.status || 500);
     }
