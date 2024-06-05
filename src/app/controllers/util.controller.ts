@@ -60,6 +60,8 @@ export class UtilController {
 
   @Post('uploadFile')
   @HttpCode(201)
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {
@@ -110,6 +112,8 @@ export class UtilController {
   }
 
   @Get('viewImage/:filename')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   async viewImage(@Param('filename') filename: string, @Res() res: Response) {
     const filePath = `src/assets/${filename}`;
     try {
@@ -126,8 +130,8 @@ export class UtilController {
   }
 
   @Get('downloadFile/:filename')
-  // @UseGuards(AuthGuard)
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   async downloadFile(@Param('filename') filename: string, @Res() res: Response) {
     if (!filename) {
       throw new HttpException('Filename is empty', HttpStatus.BAD_REQUEST);
