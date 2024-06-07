@@ -50,7 +50,7 @@ export class AuthService {
             })
             .execute();
 
-        const payload = { email: user.email, username: user.username, sub: user.id };
+        const payload = { usersId: user.id };
 
         return {
             statusCode: 200,
