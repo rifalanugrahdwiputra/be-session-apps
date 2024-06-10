@@ -119,8 +119,6 @@ export class AuthService {
                 return { message: 'User registered successfully' };
             }
         }
-        catch (e) {
-            console.log(e);
-        }
+        catch (e) { }
     }
 }

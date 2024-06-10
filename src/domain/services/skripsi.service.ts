@@ -114,9 +114,7 @@ export class SkripsiService {
                     }
                 });
         }
-        catch (error) {
-            console.log(error);
-        }
+        catch (error) { }
     }
 
     async update(body: CreateSkripsi, id: Number, request: Request) {
@@ -199,9 +197,7 @@ export class SkripsiService {
                     }
                 });
         }
-        catch (error) {
-            console.log(error);
-        }
+        catch (error) { }
     }
 
     async active(id: Number, request: Request) {
@@ -252,9 +248,7 @@ export class SkripsiService {
                     }
                 });
         }
-        catch (error) {
-            console.log(error);
-        }
+        catch (error) { }
     }
 
     async deactive(id: Number, request: Request) {
@@ -305,9 +299,7 @@ export class SkripsiService {
                     }
                 });
         }
-        catch (error) {
-            console.log(error);
-        }
+        catch (error) { }
     }
 
     async all(query: SkripsiDTO, request: Request) {
@@ -383,13 +375,9 @@ export class SkripsiService {
                     let statusCode = 200;
                     return { statusCode, data, count };
                 }
-            } catch (error) {
-                console.log(error)
-            }
+            } catch (error) { }
         }
-        catch (error) {
-            console.log(error);
-        }
+        catch (error) { }
     }
 
     async findOne(id: Number, request: Request) {
@@ -434,13 +422,9 @@ export class SkripsiService {
                         }
                     });
             }
-            catch (e) {
-                console.log(e);
-            }
+            catch (e) { }
         }
-        catch (error) {
-            console.log(error);
-        }
+        catch (error) { }
     }
 
     async deleteByid(id: Number, request: Request) {
@@ -480,9 +464,7 @@ export class SkripsiService {
                 .execute();
             return { message: 'Skripsi deleted successfully' };
         }
-        catch (error) {
-            console.log(error);
-        }
+        catch (error) { }
     }
 
     private extractTokenFromHeader(authHeader: string | undefined): string | undefined {

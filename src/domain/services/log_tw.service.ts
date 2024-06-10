@@ -98,9 +98,7 @@ export class LogTwService {
         return { statusCode, data, count };
       }
     }
-    catch (e) {
-      console.log(e)
-    }
+    catch (e) { }
   }
 
   async findOne(id: number) {
@@ -116,9 +114,7 @@ export class LogTwService {
           }
         });
     }
-    catch (e) {
-      console.log(e);
-    }
+    catch (e) { }
   }
 
   async deleteById(id: number) {

@@ -108,9 +108,7 @@ export class DosenService {
           }
         });
     }
-    catch (error) {
-      console.log(error);
-    }
+    catch (error) { }
   }
 
   async update(body: CreateDosen, nidn: string, request: Request) {
@@ -183,9 +181,7 @@ export class DosenService {
           }
         });
     }
-    catch (error) {
-      console.log(error);
-    }
+    catch (error) { }
   }
 
   async active(nidn: string, request: Request) {

@@ -27,71 +27,64 @@ export class DashboardService {
 
   async all() {
     try {
-      try {
-        const dosen = await this.dosenRepository
-          .createQueryBuilder()
-          .select()
-          .getManyAndCount();
-        const logtw = await this.logTwRepository
-          .createQueryBuilder()
-          .select()
-          .getManyAndCount();
-        const mahasiswa = await this.mahasiswaRepository
-          .createQueryBuilder()
-          .select()
-          .getManyAndCount();
-        const programstudi = await this.programStudiRepository
-          .createQueryBuilder()
-          .select()
-          .getManyAndCount();
-        const skripsi = await this.skripsiRepository
-          .createQueryBuilder()
-          .select()
-          .getManyAndCount();
-        let countDosen = dosen[1];
-        let countLogTw = logtw[1];
-        let countMahasiswa = mahasiswa[1];
-        let countProgramStudi = programstudi[1];
-        let countSkripsi = skripsi[1];
-        let countAll = countDosen + countLogTw + countMahasiswa + countProgramStudi + countSkripsi;
-        let statusCode = 200;
-        return {
-          statusCode,
-          data: {
-            countDosen: countDosen,
-            countStudi: countProgramStudi,
-            countLogUsers: countLogTw,
-            countMahasiswa: countMahasiswa,
-            countSkripsi: countSkripsi,
-            chart: [
-              {
-                countAll: countAll,
-              },
-              {
-                countDosen: countDosen,
-              },
-              {
-                countStudi: countProgramStudi,
-              },
-              {
-                countLogUsers: countLogTw,
-              },
-              {
-                countMahasiswa: countMahasiswa,
-              },
-              {
-                countSkripsi: countSkripsi,
-              }
-            ]
-          }
-        };
-      }
-      catch (e) {
-        console.log(e)
-      }
+      const dosen = await this.dosenRepository
+        .createQueryBuilder()
+        .select()
+        .getManyAndCount();
+      const logtw = await this.logTwRepository
+        .createQueryBuilder()
+        .select()
+        .getManyAndCount();
+      const mahasiswa = await this.mahasiswaRepository
+        .createQueryBuilder()
+        .select()
+        .getManyAndCount();
+      const programstudi = await this.programStudiRepository
+        .createQueryBuilder()
+        .select()
+        .getManyAndCount();
+      const skripsi = await this.skripsiRepository
+        .createQueryBuilder()
+        .select()
+        .getManyAndCount();
+      let countDosen = dosen[1];
+      let countLogTw = logtw[1];
+      let countMahasiswa = mahasiswa[1];
+      let countProgramStudi = programstudi[1];
+      let countSkripsi = skripsi[1];
+      let countAll = countDosen + countLogTw + countMahasiswa + countProgramStudi + countSkripsi;
+      let statusCode = 200;
+      return {
+        statusCode,
+        data: {
+          countDosen: countDosen,
+          countStudi: countProgramStudi,
+          countLogUsers: countLogTw,
+          countMahasiswa: countMahasiswa,
+          countSkripsi: countSkripsi,
+          chart: [
+            {
+              countAll: countAll,
+            },
+            {
+              countDosen: countDosen,
+            },
+            {
+              countStudi: countProgramStudi,
+            },
+            {
+              countLogUsers: countLogTw,
+            },
+            {
+              countMahasiswa: countMahasiswa,
+            },
+            {
+              countSkripsi: countSkripsi,
+            }
+          ]
+        }
+      };
     }
-    catch (error) {
-      console.log(error);
-    }
+    catch (e) { }
   }
 }

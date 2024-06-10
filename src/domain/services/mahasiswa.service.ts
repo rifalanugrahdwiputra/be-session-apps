@@ -105,9 +105,7 @@ export class MahasiswaService {
                     }
                 });
         }
-        catch (error) {
-            console.log(error);
-        }
+        catch (error) { }
     }
 
     async update(body: CreateMahasiswa, nim: string, request: Request) {
@@ -181,9 +179,7 @@ export class MahasiswaService {
                     }
                 });
         }
-        catch (error) {
-            console.log(error);
-        }
+        catch (error) { }
     }
 
     async active(nim: string, request: Request) {
@@ -234,9 +230,7 @@ export class MahasiswaService {
                     }
                 });
         }
-        catch (error) {
-            console.log(error);
-        }
+        catch (error) { }
     }
 
     async deactive(nim: string, request: Request) {
@@ -287,9 +281,7 @@ export class MahasiswaService {
                     }
                 });
         }
-        catch (error) {
-            console.log(error);
-        }
+        catch (error) { }
     }
 
     async all(query: MahasiswaDTO, request: Request) {
@@ -364,13 +356,9 @@ export class MahasiswaService {
                     let statusCode = 200;
                     return { statusCode, data, count };
                 }
-            } catch (error) {
-                console.log(error)
-            }
+            } catch (error) { }
         }
-        catch (error) {
-            console.log(error);
-        }
+        catch (error) { }
     }
 
     async findOne(nim: string, request: Request) {

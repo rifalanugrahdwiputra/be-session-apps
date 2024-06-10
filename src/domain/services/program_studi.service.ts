@@ -109,9 +109,7 @@ export class ProgramStudiService {
           }
         });
     }
-    catch (error) {
-      console.log(error);
-    }
+    catch (error) { }
   }
 
   async update(body: CreateProgramStudi, kode: string, request: Request) {
@@ -185,9 +183,7 @@ export class ProgramStudiService {
           }
         });
     }
-    catch (error) {
-      console.log(error);
-    }
+    catch (error) { }
   }
 
   async active(kode: string, request: Request) {
@@ -238,9 +234,7 @@ export class ProgramStudiService {
           }
         });
     }
-    catch (error) {
-      console.log(error);
-    }
+    catch (error) { }
   }
 
   async deactive(kode: string, request: Request) {
@@ -291,9 +285,7 @@ export class ProgramStudiService {
           }
         });
     }
-    catch (error) {
-      console.log(error);
-    }
+    catch (error) { }
   }
 
   async all(query: ProgramStudiDTO, request: Request) {
@@ -369,13 +361,9 @@ export class ProgramStudiService {
           return { statusCode, data, count };
         }
       }
-      catch (e) {
-        console.log(e)
-      }
+      catch (e) { }
     }
-    catch (error) {
-      console.log(error);
-    }
+    catch (error) { }
   }
 
   async findOne(kode: string, request: Request) {
@@ -420,13 +408,9 @@ export class ProgramStudiService {
             }
           });
       }
-      catch (e) {
-        console.log(e);
-      }
+      catch (e) { }
     }
-    catch (error) {
-      console.log(error);
-    }
+    catch (error) { }
   }
 
   async deleteByKode(kode: string, request: Request) {
@@ -465,9 +449,7 @@ export class ProgramStudiService {
         })
       return { message: 'Program Studi deleted successfully' };
     }
-    catch (error) {
-      console.log(error);
-    }
+    catch (error) { }
   }
 
   private extractTokenFromHeader(authHeader: string | undefined): string | undefined {
