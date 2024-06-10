@@ -118,69 +118,94 @@ export class MahasiswaService {
             const payload = await this.jwtService.verifyAsync(token, {
                 secret: process.env.JWT_SECRET,
             });
-            return this.mahasiswaRepository
-                .findOne({ where: { nim: nim } })
-                .then(async (mahasiswa) => {
-                    if (mahasiswa) {
-                        const existingMahasiswa = await this.mahasiswaRepository.findOne({
-                            where: { nim: body.nim },
-                        });
-                        if (existingMahasiswa && existingMahasiswa.nim !== nim) {
-                            await this.logTwRepository
-                                .createQueryBuilder()
-                                .insert()
-                                .into(LogTwEntity)
-                                .values({
-                                    user: payload.username,
-                                    ipaddress: payload.ip,
-                                    information: `${payload.username} mahasiswa sudah ada dan gagal update`,
-                                })
-                                .execute();
-                            throw new HttpException(
-                                'Another mahasiswa with the same name already exists',
-                                409,
-                            );
-                        } else {
-                            await this.mahasiswaRepository
-                                .createQueryBuilder()
-                                .update(MahasiswaEntity)
-                                .set({
-                                    nim: body.nim,
-                                    nama: body.nama,
-                                    program_studi: body.program_studi,
-                                    foto: body.Foto,
-                                })
-                                .where('nim = :nim', { nim: nim })
-                                .execute();
-                            await this.logTwRepository
-                                .createQueryBuilder()
-                                .insert()
-                                .into(LogTwEntity)
-                                .values({
-                                    user: payload.username,
-                                    ipaddress: payload.ip,
-                                    information: `${payload.username} mahasiswa berhasil di update`,
-                                })
-                                .execute();
-                            return { message: 'Mahasiswa updated successfully' };
-                        }
-                    } else {
-                        await this.logTwRepository
-                            .createQueryBuilder()
-                            .insert()
-                            .into(LogTwEntity)
-                            .values({
-                                user: payload.username,
-                                ipaddress: payload.ip,
-                                information: `${payload.username} mahasiswa tidak ditemukan`,
-                            })
-                            .execute();
-                        throw new HttpException('Mahasiswa not found', 404);
-                    }
-                });
+
+            // Retrieve the mahasiswa being updated
+            const mahasiswa = await this.mahasiswaRepository.findOne({ where: { nim: nim } });
+            if (!mahasiswa) {
+                await this.logTwRepository
+                    .createQueryBuilder()
+                    .insert()
+                    .into(LogTwEntity)
+                    .values({
+                        user: payload.username,
+                        ipaddress: payload.ip,
+                        information: `${payload.username} mahasiswa tidak ditemukan`,
+                    })
+                    .execute();
+                throw new HttpException('Mahasiswa not found', 404);
+            }
+
+            // Check if the new nim exists and belongs to a different mahasiswa
+            if (body.nim !== nim) {
+                const anotherMahasiswa = await this.mahasiswaRepository.findOne({ where: { nim: body.nim } });
+                if (anotherMahasiswa) {
+                    await this.logTwRepository
+                        .createQueryBuilder()
+                        .insert()
+                        .into(LogTwEntity)
+                        .values({
+                            user: payload.username,
+                            ipaddress: payload.ip,
+                            information: `${payload.username} mahasiswa sudah ada dan gagal update`,
+                        })
+                        .execute();
+                    throw new HttpException('Another mahasiswa with the same nim already exists', 409);
+                }
+            }
+
+            // Only update fields that are different
+            const updatedFields = {};
+            if (mahasiswa.nim !== body.nim) {
+                updatedFields['nim'] = body.nim;
+            }
+            if (mahasiswa.nama !== body.nama) {
+                updatedFields['nama'] = body.nama;
+            }
+            if (mahasiswa.program_studi !== body.program_studi) {
+                updatedFields['program_studi'] = body.program_studi;
+            }
+            if (mahasiswa.foto !== body.Foto) {
+                updatedFields['foto'] = body.Foto;
+            }
+
+            if (Object.keys(updatedFields).length > 0) {
+                await this.mahasiswaRepository
+                    .createQueryBuilder()
+                    .update(MahasiswaEntity)
+                    .set(updatedFields)
+                    .where('nim = :nim', { nim: nim })
+                    .execute();
+
+                await this.logTwRepository
+                    .createQueryBuilder()
+                    .insert()
+                    .into(LogTwEntity)
+                    .values({
+                        user: payload.username,
+                        ipaddress: payload.ip,
+                        information: `${payload.username} mahasiswa berhasil di update`,
+                    })
+                    .execute();
+                return { message: 'Mahasiswa updated successfully' };
+            } else {
+                await this.logTwRepository
+                    .createQueryBuilder()
+                    .insert()
+                    .into(LogTwEntity)
+                    .values({
+                        user: payload.username,
+                        ipaddress: payload.ip,
+                        information: `${payload.username} tidak ada perubahan pada mahasiswa`,
+                    })
+                    .execute();
+                return { message: 'No changes detected, mahasiswa not updated' };
+            }
+        } catch (error) {
+            console.log(error);
+            throw new HttpException('An error occurred', 500);
         }
-        catch (error) { }
     }
+
 
     async active(nim: string, request: Request) {
         const token = this.extractTokenFromHeader(request.headers.authorization);
